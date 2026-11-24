@@ -1,0 +1,22 @@
+<UserControl
+  x:Class="PdfExtractionLab.App.ImageView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+>
+  <DockPanel>
+    <WrapPanel DockPanel.Dock="Top">
+      <ComboBox ItemsSource="{Binding Sides}" SelectedIndex="{Binding Side}" />
+      <ComboBox
+        x:Name="Images"
+        IsSynchronizedWithCurrentItem="True"
+        MinWidth="240"
+        ItemsSource="{Binding Selected.Images}"
+        SelectionChanged="SelectImage"
+      />
+      <Button Click="SaveOriginal" Content="原本を保存" />
+      <Button Click="SavePreview" Content="表示用画像を保存" />
+    </WrapPanel>
+    <TextBlock DockPanel.Dock="Top" x:Name="Details" Margin="4" TextWrapping="Wrap" />
+    <Image x:Name="Preview" Stretch="Uniform" Margin="8" />
+  </DockPanel>
+</UserControl>

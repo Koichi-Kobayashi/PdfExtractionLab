@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../PdfExtractionLab.Core/PdfExtractionLab.Core.csproj" />
+    <ProjectReference Include="../PdfExtractionLab.Engines.PdfPig/PdfExtractionLab.Engines.PdfPig.csproj" />
+    <ProjectReference Include="../PdfExtractionLab.Engines.OnePdf/PdfExtractionLab.Engines.OnePdf.csproj" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
+  </ItemGroup>
+</Project>

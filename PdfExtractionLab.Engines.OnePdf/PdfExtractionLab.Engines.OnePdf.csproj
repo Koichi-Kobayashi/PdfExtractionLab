@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../PdfExtractionLab.Core/PdfExtractionLab.Core.csproj" />
+    <PackageReference Include="RecursiveAI.OnePdf" Version="1.25.0" />
+  </ItemGroup>
+</Project>

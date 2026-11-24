@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="PdfExtractionLab.App/PdfExtractionLab.App.csproj" />
+  <Project Path="PdfExtractionLab.Core/PdfExtractionLab.Core.csproj" />
+  <Project Path="PdfExtractionLab.Engines.PdfPig/PdfExtractionLab.Engines.PdfPig.csproj" />
+  <Project Path="PdfExtractionLab.Engines.OnePdf/PdfExtractionLab.Engines.OnePdf.csproj" />
+  <Project Path="PdfExtractionLab.Benchmarks/PdfExtractionLab.Benchmarks.csproj" />
+  <Project Path="PdfExtractionLab.Tests/PdfExtractionLab.Tests.csproj" />
+</Solution>

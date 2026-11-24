@@ -1,0 +1,212 @@
+<Window
+  x:Class="PdfExtractionLab.App.MainWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+  Title="PdfExtractionLab"
+  Width="1220"
+  Height="830"
+  MinWidth="890"
+  MinHeight="580"
+  Background="{DynamicResource ApplicationBackgroundBrush}"
+  Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+  AllowDrop="True"
+  PreviewDragOver="OnDragOver"
+  Drop="OnDrop"
+>
+  <Window.Resources>
+    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+      <Setter Property="Margin" Value="3" />
+      <Setter Property="Padding" Value="12,5" />
+    </Style>
+    <Style TargetType="DataGrid" BasedOn="{StaticResource {x:Type DataGrid}}">
+      <Setter Property="IsReadOnly" Value="True" />
+      <Setter Property="CanUserAddRows" Value="False" />
+      <Setter Property="EnableRowVirtualization" Value="True" />
+      <Setter Property="EnableColumnVirtualization" Value="True" />
+    </Style>
+  </Window.Resources>
+  <DockPanel Margin="22">
+    <StackPanel DockPanel.Dock="Top">
+      <DockPanel>
+        <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center" Text="{Binding Versions}" />
+        <TextBlock FontSize="25" FontWeight="SemiBold" Text="PDF 抽出比較" />
+      </DockPanel>
+      <DockPanel Margin="0,10,0,4">
+        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+          <Button Command="{Binding BrowseCommand}" Content="参照" />
+          <Button Command="{Binding CompareCommand}" Content="比較実行" />
+          <Button Command="{Binding BenchmarkCommand}" Content="ベンチマーク" />
+          <Button Command="{Binding CancelCommand}" Content="キャンセル" />
+        </StackPanel>
+        <TextBox
+          VerticalContentAlignment="Center"
+          Text="{Binding Path,UpdateSourceTrigger=PropertyChanged}"
+        />
+      </DockPanel>
+      <WrapPanel>
+        <TextBlock VerticalAlignment="Center" Text="ページ " />
+        <ComboBox MinWidth="64" ItemsSource="{Binding PageNumbers}" SelectedItem="{Binding Page}" />
+        <ComboBox
+          ToolTip="次回実行のテキスト取得順"
+          ItemsSource="{Binding Orders}"
+          SelectedItem="{Binding Order}"
+        />
+        <Button Click="ThemeClick" Content="テーマ切替" />
+        <Button Command="{Binding ExportCommand}" Content="結果を出力" />
+        <CheckBox
+          VerticalAlignment="Center"
+          Content="本文・座標文字・警告詳細を含む"
+          IsChecked="{Binding IncludeContent}"
+        />
+      </WrapPanel>
+      <UniformGrid Columns="2" Margin="0,9">
+        <Border BorderBrush="SteelBlue" BorderThickness="3,0,0,0" Padding="12,2">
+          <StackPanel>
+            <TextBlock FontWeight="Bold" Text="PdfPig" />
+            <TextBlock TextWrapping="Wrap" Text="{Binding Left.Summary}" />
+          </StackPanel>
+        </Border>
+        <Border BorderBrush="DarkCyan" BorderThickness="3,0,0,0" Padding="12,2">
+          <StackPanel>
+            <TextBlock FontWeight="Bold" Text="OnePDF" />
+            <TextBlock TextWrapping="Wrap" Text="{Binding Right.Summary}" />
+          </StackPanel>
+        </Border>
+      </UniformGrid>
+    </StackPanel>
+    <TextBlock
+      DockPanel.Dock="Bottom"
+      Margin="0,8,0,0"
+      TextWrapping="Wrap"
+      Text="{Binding Status}"
+    />
+    <TextBlock DockPanel.Dock="Top" Margin="0,0,0,6" Text="{Binding Relative}" />
+    <TabControl>
+      <TabItem Header="テキスト">
+        <DockPanel>
+          <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <TextBlock Text="文字サイズ" VerticalAlignment="Center" />
+            <Slider Width="120" Minimum="10" Maximum="32" Value="{Binding FontSize}" Margin="8" />
+            <CheckBox
+              Content="全文を表示（ページ境界 FF）"
+              IsChecked="{Binding WholeDocument}"
+              VerticalAlignment="Center"
+            />
+          </StackPanel>
+          <UniformGrid Columns="2">
+            <TextBox
+              x:Name="LeftBody"
+              IsReadOnly="True"
+              Text="{Binding DisplayLeft,Mode=OneWay}"
+              FontSize="{Binding FontSize}"
+              HorizontalScrollBarVisibility="Auto"
+              VerticalScrollBarVisibility="Auto"
+              ScrollViewer.ScrollChanged="SyncScroll"
+            />
+            <TextBox
+              x:Name="RightBody"
+              IsReadOnly="True"
+              Text="{Binding DisplayRight,Mode=OneWay}"
+              FontSize="{Binding FontSize}"
+              HorizontalScrollBarVisibility="Auto"
+              VerticalScrollBarVisibility="Auto"
+              ScrollViewer.ScrollChanged="SyncScroll"
+            />
+          </UniformGrid>
+        </DockPanel>
+      </TabItem>
+      <TabItem Header="差分">
+        <DockPanel>
+          <WrapPanel DockPanel.Dock="Top">
+            <ComboBox ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" />
+            <ComboBox ItemsSource="{Binding Pairs}" SelectedIndex="{Binding Pair}" />
+            <Button Command="{Binding LoadExpectedCommand}" Content="正解テキストを開く" />
+          </WrapPanel>
+          <TextBlock DockPanel.Dock="Top" Text="{Binding DiffStatus}" />
+          <DataGrid ItemsSource="{Binding Differences}">
+            <DataGrid.RowStyle>
+              <Style TargetType="DataGridRow">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding Kind}" Value="追加">
+                    <Setter Property="Background" Value="#355DA879" />
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding Kind}" Value="欠落">
+                    <Setter Property="Background" Value="#35D86666" />
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding Kind}" Value="置換">
+                    <Setter Property="Background" Value="#40BD9123" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </DataGrid.RowStyle>
+          </DataGrid>
+        </DockPanel>
+      </TabItem>
+      <TabItem Header="座標">
+        <DockPanel>
+          <WrapPanel DockPanel.Dock="Top">
+            <ComboBox ItemsSource="{Binding Sides}" SelectedIndex="{Binding Side}" />
+            <ComboBox ItemsSource="{Binding Kinds}" SelectedItem="{Binding Kind}" />
+            <TextBlock Margin="6" Text="Raw はAPI座標。X・Y は左上原点の pt" />
+          </WrapPanel>
+          <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap" Text="{Binding Geometry}" />
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="2*" />
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <DataGrid AutoGeneratingColumn="DescribeCoordinates" ItemsSource="{Binding Elements}" />
+            <Viewbox Grid.Column="1" Margin="6" Stretch="Uniform">
+              <ItemsControl
+                ItemsSource="{Binding Elements}"
+                Width="{Binding Selected.Layout.Width}"
+                Height="{Binding Selected.Layout.Height}"
+                Background="#FFF9F5"
+                ClipToBounds="True"
+              >
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <Canvas />
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                  <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding X}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                  </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Border
+                      BorderBrush="Teal"
+                      BorderThickness="0.7"
+                      Background="#205DABA0"
+                      Width="{Binding Width}"
+                      Height="{Binding Height}"
+                      ToolTip="{Binding Text}"
+                    />
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </Viewbox>
+          </Grid>
+        </DockPanel>
+      </TabItem>
+      <TabItem Header="画像">
+        <ContentControl x:Name="ImagePanel" />
+      </TabItem>
+      <TabItem Header="ベンチマーク">
+        <ContentControl x:Name="BenchPanel" />
+      </TabItem>
+      <TabItem Header="ログ">
+        <TextBox
+          IsReadOnly="True"
+          TextWrapping="Wrap"
+          VerticalScrollBarVisibility="Auto"
+          Text="{Binding Log,Mode=OneWay}"
+        />
+      </TabItem>
+    </TabControl>
+  </DockPanel>
+</Window>

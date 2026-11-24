@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsTestProject>true</IsTestProject>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../PdfExtractionLab.Core/PdfExtractionLab.Core.csproj" />
+    <ProjectReference Include="../PdfExtractionLab.App/PdfExtractionLab.App.csproj" />
+    <ProjectReference Include="../PdfExtractionLab.Engines.PdfPig/PdfExtractionLab.Engines.PdfPig.csproj" />
+    <ProjectReference Include="../PdfExtractionLab.Engines.OnePdf/PdfExtractionLab.Engines.OnePdf.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.12.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="4.0.1" />
+    <PackageReference Include="QRCoder" Version="1.9.0" />
+  </ItemGroup>
+</Project>

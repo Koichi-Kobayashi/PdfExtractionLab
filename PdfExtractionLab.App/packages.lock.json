@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net10.0-windows7.0": {
+      "CommunityToolkit.Mvvm": {
+        "type": "Direct",
+        "requested": "[8.4.2, )",
+        "resolved": "8.4.2",
+        "contentHash": "WadCzGEc2U+3e20avRLng4qNtt4zoOGWrdUISqJWrHe3/FSnrYjuM5Sb4yQb09LhkBXrrI4Zt3dLKgRMbItsrg=="
+      },
+      "WPF-UI": {
+        "type": "Direct",
+        "requested": "[4.3.0, )",
+        "resolved": "4.3.0",
+        "contentHash": "SIHhc8lIrhEQ/1cLFZN6Dtf8cqsLm4myBULj9obnacd9TyDs2vizhKYzRzTlcPEcnzb3L4EstvPN3M6kcXbJCA==",
+        "dependencies": {
+          "WPF-UI.Abstractions": "4.3.0"
+        }
+      },
+      "DiffPlex": {
+        "type": "Transitive",
+        "resolved": "1.9.0",
+        "contentHash": "Z4IDEH6iOb6d+Y2QUjsbq1Fp5I/kwZzNdr/evBTbCGq+ShAjE4baLm7lX1tfjV2p34QI3V9kctCQziFuuKqeCA=="
+      },
+      "PdfPig": {
+        "type": "Transitive",
+        "resolved": "0.1.16",
+        "contentHash": "qQcbsNMYVY+K5ELptax2S8thNMk0+rSQq3H/KdYj3LLcko8yTCz8y5KIvsKxIyAuTN0ZYNnfsZkM+0EvxTwHVA=="
+      },
+      "RecursiveAI.OnePdf": {
+        "type": "Transitive",
+        "resolved": "1.25.0",
+        "contentHash": "saSDYo/vz2f3QYUCWZKohn5HAsQ088xDH8xNoL5XQd2CV9E8CBIeB3ihG3UvEpep9gJ68YtbaxjWaawKhl2TVQ=="
+      },
+      "WPF-UI.Abstractions": {
+        "type": "Transitive",
+        "resolved": "4.3.0",
+        "contentHash": "7Kj9DmCCo4SOCd1jAiw4+EcMFP2nR8rLLvitAYzVtzbWToTsodkbie24+8x9C4LDLxkopWEUGX62szqqNy7oeg=="
+      },
+      "pdfextractionlab.core": {
+        "type": "Project",
+        "dependencies": {
+          "DiffPlex": "[1.9.0, )"
+        }
+      },
+      "pdfextractionlab.engines.onepdf": {
+        "type": "Project",
+        "dependencies": {
+          "PdfExtractionLab.Core": "[1.0.0, )",
+          "RecursiveAI.OnePdf": "[1.25.0, )"
+        }
+      },
+      "pdfextractionlab.engines.pdfpig": {
+        "type": "Project",
+        "dependencies": {
+          "PdfExtractionLab.Core": "[1.0.0, )",
+          "PdfPig": "[0.1.16, )"
+        }
+      }
+    }
+  }
+}

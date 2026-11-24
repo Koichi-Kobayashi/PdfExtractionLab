@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net10.0": {
+      "RecursiveAI.OnePdf": {
+        "type": "Direct",
+        "requested": "[1.25.0, )",
+        "resolved": "1.25.0",
+        "contentHash": "saSDYo/vz2f3QYUCWZKohn5HAsQ088xDH8xNoL5XQd2CV9E8CBIeB3ihG3UvEpep9gJ68YtbaxjWaawKhl2TVQ=="
+      },
+      "DiffPlex": {
+        "type": "Transitive",
+        "resolved": "1.9.0",
+        "contentHash": "Z4IDEH6iOb6d+Y2QUjsbq1Fp5I/kwZzNdr/evBTbCGq+ShAjE4baLm7lX1tfjV2p34QI3V9kctCQziFuuKqeCA=="
+      },
+      "pdfextractionlab.core": {
+        "type": "Project",
+        "dependencies": {
+          "DiffPlex": "[1.9.0, )"
+        }
+      }
+    }
+  }
+}
