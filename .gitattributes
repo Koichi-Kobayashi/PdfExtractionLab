@@ -1,0 +1,10 @@
+# Default for source and documentation.
+* text=auto eol=lf
+
+# Windows-generated NuGet locks and test report.
+packages.lock.json text eol=crlf
+fixtures/observations.md text eol=crlf
+
+# PDF offsets and exact-text comparisons depend on the original bytes.
+*.pdf binary !eol
+fixtures/**/*.txt -text !eol
